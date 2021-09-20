@@ -2,7 +2,6 @@ var cityList =$("#city-list");
 var cities = [];
 var key = "fc8bffadcdca6a94d021c093eac22797";
 
-//Format for day
 function FormatDay(date){
     var date = new Date();
     console.log(date);
@@ -15,41 +14,25 @@ function FormatDay(date){
     return dayOutput;
 }
 
-
-
-//Calling function init();
 init();
 
-//Function init();
 function init(){
-    //Get stored cities from localStorage
-    //Parsing the JSON string to an object
     var storedCities = JSON.parse(localStorage.getItem("cities"));
 
-    // If cities were retrieved from localStorage, update the cities array to it
     if (storedCities !== null) {
         cities = storedCities;
       }
-    // Render cities to the DOM
     renderCities();
-    // console.log(cities);
 }
 
-//Function StoreCities()
 function storeCities(){
-   // Stringify and set "cities" key in localStorage to cities array
   localStorage.setItem("cities", JSON.stringify(cities));
   console.log(localStorage);
 }
 
-//Function renderCities()
 function renderCities() {
-    // Clear cityList element
-    // cityList.text = "";
-    // cityList.HTML = "";
     cityList.empty();
     
-    // Render a new li for each city
     for (var i = 0; i < cities.length; i++) {
       var city = cities[i];
       
@@ -60,7 +43,6 @@ function renderCities() {
       console.log(li);
       cityList.prepend(li);
     }
-    //Get Response weather for the first city only
     if (!city){
         return
     } 
@@ -69,37 +51,25 @@ function renderCities() {
     };
 }   
 
-  //When form is submitted...
   $("#add-city").on("click", function(event){
       event.preventDefault();
-
-    // This line will grab the city from the input box
     var city = $("#city-input").val().trim();
-    
-    // Return from function early if submitted city is blank
     if (city === "") {
         return;
     }
-    //Adding city-input to the city array
     cities.push(city);
-    // Store updated cities in localStorage, re-render the list
   storeCities();
   renderCities();
   });
 
-  //Function get Response Weather 
-  
   function getResponseWeather(cityName){
     var queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" +cityName+ "&appid=" + key; 
 
-    //Clear content of today-weather
     $("#today-weather").empty();
     $.ajax({
       url: queryURL,
       method: "GET"
     }).then(function(response) {
-        
-      // Create a new table row element
       cityTitle = $("<h3>").text(response.name + " "+ FormatDay());
       $("#today-weather").append(cityTitle);
       var TempetureToNum = parseInt((response.main.temp)* 9/5 - 459);
@@ -112,7 +82,6 @@ function renderCities() {
       var CoordLon = response.coord.lon;
       var CoordLat = response.coord.lat;
     
-        //Api to get UV index
         var queryURL2 = "https://api.openweathermap.org/data/2.5/uvi?appid="+ key+ "&lat=" + CoordLat +"&lon=" + CoordLon;
         $.ajax({
             url: queryURL2,
@@ -139,8 +108,7 @@ function renderCities() {
                 cityUV.attr("class","purple")
             }
         });
-    
-        //Api to get 5-day forecast  
+
         var queryURL3 = "https://api.openweathermap.org/data/2.5/forecast?q=" + cityName + "&appid=" + key;
             $.ajax({
             url: queryURL3,
@@ -148,12 +116,12 @@ function renderCities() {
         }).then(function(response5day) { 
             $("#boxes").empty();
             console.log(response5day);
-            for(var i=0, j=0; j<=5; i=i+6){
+            for(var i=0, j=0; j<=4; i=i+6){
                 var read_date = response5day.list[i].dt;
                 if(response5day.list[i].dt != response5day.list[i+1].dt){
                     var FivedayDiv = $("<div>");
-                    FivedayDiv.attr("class","col-3 m-2 bg-primary")
-                    var d = new Date(0); // The 0 there is the key, which sets the date to the epoch
+                    FivedayDiv.attr("class","col-2 m-2 bg-secondary")
+                    var d = new Date(0);
                     d.setUTCSeconds(read_date);
                     var date = d;
                     console.log(date);
@@ -163,7 +131,6 @@ function renderCities() {
                     (month<10 ? '0' : '') + month + '/' +
                     (day<10 ? '0' : '') + day;
                     var Fivedayh4 = $("<h6>").text(dayOutput);
-                    //Set src to the imags
                     var imgtag = $("<img>");
                     var skyconditions = response5day.list[i].weather[0].main;
                     if(skyconditions==="Clouds"){
@@ -187,33 +154,12 @@ function renderCities() {
                     console.log(response5day);
                     j++;
                 }
-            
-        }
-      
+        } 
     });
-      
-
     });
-    
   }
 
-  //Click function to each Li 
   $(document).on("click", "#listC", function() {
     var thisCity = $(this).attr("data-city");
     getResponseWeather(thisCity);
   });
-
-
-    
-  
-  
-    
-
-
-
-  
-
-
-
-
-

@@ -5,6 +5,8 @@ Weather Dashboard that retrieves data from another application's API.
 * HTML
 * CSS
 * JavaScript
+## Screenshots:
+[Mock-Up](mock-up.png)
 
 ## Live URL:
 https://sirwettering.github.io/weather-dashboard/

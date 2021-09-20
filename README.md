@@ -1,12 +1,12 @@
 # Server-Side API Weather Dashboard
-Weather Dashboard that retrieves data from another application's API.
+Weather Dashboard that retrieves data from another Open Weather Map's API.
 
 ## Built With:
 * HTML
 * CSS
 * JavaScript
 ## Screenshots:
-[Mock-Up](mock-up.png)
+![mock-up](https://user-images.githubusercontent.com/88121961/133952787-04fe4038-d5fd-4b8e-a41a-ea05cd562776.png)
 
 ## Live URL:
 https://sirwettering.github.io/weather-dashboard/

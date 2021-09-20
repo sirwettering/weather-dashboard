@@ -13,8 +13,8 @@ https://sirwettering.github.io/weather-dashboard/
 https://github.com/sirwettering/weather-dashboard
 
 ## How to Use:
-1. Type in the city you would like a 5-day weather forecast
-2. Press the search icon.
+1. Type in the city you would like a 5-day weather forecast.
+2. Press the search button.
 3. The 5-day forecast should appear.
 4. The cities you search will be saved in your local storage.
 
